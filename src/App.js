@@ -1,23 +1,35 @@
-import logo from './logo.svg';
 import './App.css';
+import { Button  } from 'react-bootstrap';
+import { useState } from "react";
 
 function App() {
+  const [inputText, setInputText] = useState("");
+
+  const queryCPF = (cep) => {
+    fetch(`https://viacep.com.br/ws/${cep}/json/`)
+    .then(result => {
+      result.json().then(data => {
+        document.getElementById("App-content-box").innerHTML = JSON.stringify(data, null, 4);
+      });
+    }).catch(err => {
+      console.log(err)
+      alert(err);
+    })
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="App-header">
+        <h1>
+          ViaCEP
+        </h1>
+      </div>
+      <div className="App-main">
+        <input value={inputText} onChange={(e) => setInputText(e.target.value)} placeholder="set a CEP"/>
+        <Button variant='primary' onClick={() => queryCPF(inputText)}>Click me</Button>
+
+        <div id="App-content-box"></div>
+      </div>
     </div>
   );
 }
