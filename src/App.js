@@ -9,7 +9,7 @@ function App() {
     fetch(`https://viacep.com.br/ws/${cep}/json/`)
     .then(result => {
       result.json().then(data => {
-        document.getElementById("App-content-box").innerHTML = JSON.stringify(data, null, 4);
+        document.getElementById("App-content-box").innerHTML = JSON.stringify(data, null, 6);
       });
     }).catch(err => {
       console.log(err)
@@ -28,7 +28,7 @@ function App() {
         <input value={inputText} onChange={(e) => setInputText(e.target.value)} placeholder="set a CEP"/>
         <Button variant='primary' onClick={() => queryCPF(inputText)}>Click me</Button>
 
-        <div id="App-content-box"></div>
+        <pre id="App-content-box"></pre>
       </div>
     </div>
   );
